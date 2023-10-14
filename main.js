@@ -50,7 +50,7 @@ var controller;
 // In animation it is often useful to think of an object as having some DOF
 // Then the animation is simply evolving those DOF over time.
 var sphereRotation = [0,0,0];
-var spherePosition = [-4,0,0];
+var spherePosition = [0,-3.25,0];
 
 var cubeRotation = [0,0,0];
 var cubePosition = [0,-5,0];
@@ -262,6 +262,7 @@ function render(timestamp) {
 	gPush();
 		// Put the sphere where it should be!
 		gTranslate(spherePosition[0],spherePosition[1],spherePosition[2]);
+		gScale(0.75, 0.75, 1)
 		gPush();
 		{
 			// Draw the sphere!
