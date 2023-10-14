@@ -53,7 +53,7 @@ var sphereRotation = [0,0,0];
 var spherePosition = [-4,0,0];
 
 var cubeRotation = [0,0,0];
-var cubePosition = [-1,-5,0];
+var cubePosition = [0,-5,0];
 
 var cylinderRotation = [0,0,0];
 var cylinderPosition = [1.1,0,0];
@@ -274,6 +274,7 @@ function render(timestamp) {
 	// Cube example
 	gPush();
 		gTranslate(cubePosition[0],cubePosition[1],cubePosition[2]);
+		gScale(6, 1, 1)
 		gPush();
 		{
 			setColor(vec4(0.0,0,0.0,1.0));
