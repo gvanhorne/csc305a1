@@ -276,7 +276,7 @@ function render(timestamp) {
 		gTranslate(cubePosition[0],cubePosition[1],cubePosition[2]);
 		gPush();
 		{
-			setColor(vec4(0.0,1.0,0.0,1.0));
+			setColor(vec4(0.0,0,0.0,1.0));
 			// Here is an example of integration to rotate the cube around the y axis at 30 degrees per second
 			// new cube rotation around y = current cube rotation around y + 30deg/s*dt
 			cubeRotation[1] = cubeRotation[1] + 30*dt;
