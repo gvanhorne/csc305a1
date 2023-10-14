@@ -271,6 +271,17 @@ function render(timestamp) {
 		}
 		gPop();
 	gPop();
+	gPush();
+		gTranslate(spherePosition[0] - 1.2, spherePosition[1] - 0.35, spherePosition[1])
+		gScale(0.4, 0.4, 1);
+		gPush();
+		{
+			// Draw the sphere!
+			setColor(vec4(0.5,0.5,0.5,1.0));
+			drawSphere();
+		}
+		gPop();
+	gPop();
 
 	// Cube example
 	gPush();
