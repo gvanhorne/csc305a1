@@ -265,7 +265,7 @@ function render(timestamp) {
 		gPush();
 		{
 			// Draw the sphere!
-			setColor(vec4(1.0,0.0,0.0,1.0));
+			setColor(vec4(0.5,0.5,0.5,1.0));
 			drawSphere();
 		}
 		gPop();
