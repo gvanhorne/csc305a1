@@ -223,6 +223,44 @@ function gPush() {
     MS.push(modelMatrix);
 }
 
+/**
+ * Draw a sphere with a specific position, scale, and color.
+ *
+ * @param {number} posX - The x-coordinate of the sphere's position.
+ * @param {number} posY - The y-coordinate of the sphere's position.
+ * @param {number} posZ - The z-coordinate of the sphere's position.
+ * @param {number} scale - The scaling factor for the sphere.
+ */
+function drawRock(posX, posY, posZ, scale) {
+	gPush();
+	gTranslate(posX, posY, posZ);
+	gScale(scale, scale, 1);
+	gPush();
+	{
+	  setColor(vec4(0.5, 0.5, 0.5, 1.0));
+	  drawSphere();
+	}
+	gPop();
+	gPop();
+  }
+
+/**
+ * Draw a ground rectangle at the bottom of the screen.
+ *
+ * @param {number} width - The width of the ground rectangle.
+ */
+function drawGround(width) {
+	gPush();
+	gTranslate(cubePosition[0], cubePosition[1], cubePosition[2]);
+	gScale(width, 1, 1);
+	gPush();
+	{
+	  setColor(vec4(0.0, 0.0, 0.0, 1.0));
+	  drawCube();
+	}
+	gPop();
+	gPop();
+  }
 
 function render(timestamp) {
 
@@ -258,42 +296,10 @@ function render(timestamp) {
 		prevTime = timestamp;
 	}
 
-	// Sphere example
-	gPush();
-		// Put the sphere where it should be!
-		gTranslate(spherePosition[0],spherePosition[1],spherePosition[2]);
-		gScale(0.75, 0.75, 1)
-		gPush();
-		{
-			// Draw the sphere!
-			setColor(vec4(0.5,0.5,0.5,1.0));
-			drawSphere();
-		}
-		gPop();
-	gPop();
-	gPush();
-		gTranslate(spherePosition[0] - 1.2, spherePosition[1] - 0.35, spherePosition[1])
-		gScale(0.4, 0.4, 1);
-		gPush();
-		{
-			// Draw the sphere!
-			setColor(vec4(0.5,0.5,0.5,1.0));
-			drawSphere();
-		}
-		gPop();
-	gPop();
-
-	// Cube example
-	gPush();
-		gTranslate(cubePosition[0],cubePosition[1],cubePosition[2]);
-		gScale(6, 1, 1)
-		gPush();
-		{
-			setColor(vec4(0.0,0,0.0,1.0));
-			drawCube();
-		}
-		gPop();
-	gPop();
+	// Draw large center rock + smaller offset rock
+	drawRock(spherePosition[0], spherePosition[1], spherePosition[2], 0.75);
+	drawRock(spherePosition[0] - 1.2, spherePosition[1] - 0.35, spherePosition[1], 0.4);
+	drawGround(6);
 
 	// Cylinder example
 	gPush();
