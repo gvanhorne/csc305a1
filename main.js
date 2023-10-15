@@ -60,8 +60,8 @@ var cubePosition = [0,-5,0];
 var cylinderRotation = [0,0,0];
 var cylinderPosition = [1.1,0,0];
 
-var coneRotation = [0,0,0];
-var conePosition = [3,0,0];
+var fishRotation = [0,0,0];
+var fishPosition = [0,-3.25,0];
 
 // Setting the colour which is needed during illumination of a surface
 function setColor(c)
@@ -320,13 +320,14 @@ function drawFish(posX, posY, posZ, rotationSpeed) {
 	gScale(0.75, 0.75, 0.75);
 	gPush();
 	(function drawFishBody() {
-		gTranslate(posX, posY, posZ);
+		gTranslate(fishPosition[0], fishPosition[1], posZ);
 		gPush();
 		{
 			// Draw fish body
 			setColor(vec4(1, 0.5, 0, 1));
-			coneRotation[1] = coneRotation[1] + rotationSpeed*dt; // Update rotation
-			gRotate(coneRotation[1], 0, 1, 0);
+			fishPosition[1] = fishPosition[1] + 0.01*Math.cos(0.001*TIME); // Update y position
+			fishRotation[1] = fishRotation[1] + rotationSpeed*dt; // Update rotation
+			gRotate(fishRotation[1], 0, 1, 0);
 			gScale(0.75, 0.75, 2.5);
 			drawCone();
 		}
@@ -334,7 +335,7 @@ function drawFish(posX, posY, posZ, rotationSpeed) {
 	})();
 	(function drawFishHead() {
 		gPush();
-		gRotate(coneRotation[1] + 180, 0, 1, 0); // Rotate by 180 degrees
+		gRotate(fishRotation[1] + 180, 0, 1, 0); // Rotate by 180 degrees
         gTranslate(0, 0, 1.62);
         setColor(vec4(1, 0.5, 0, 1));
         gScale(0.75, 0.75, 0.75);
@@ -423,7 +424,7 @@ function render(timestamp) {
 	drawRock(smallRockPosition[0], smallRockPosition[1], smallRockPosition[2], 0.4);
 	drawGround(6);
 	drawSeaweeds();
-	drawFish(conePosition[0], conePosition[1], conePosition[2], 30);
+	drawFish(fishPosition[0], fishPosition[1], fishPosition[2], 30);
 
 	// // Cylinder example
 	// gPush();
