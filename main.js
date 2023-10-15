@@ -43,7 +43,7 @@ var TIME = 0.0; // Realtime
 var dt = 0.0
 var prevTime = 0.0;
 var resetTimerFlag = true;
-var animFlag = false;
+var animFlag = true;
 var controller;
 
 // These are used to store the current state of objects.
@@ -361,11 +361,20 @@ function drawFish(posX, posY, posZ, rotationSpeed) {
 		gPop();
 	})();
 	(function drawFishTail() {
+		// dorsal fin
 		gPush();
-		gTranslate(0, 0.5, -4.5);
-		gRotate(180, 0, 1, 0.25);
+		gTranslate(0, 0.75, -3.85);
+		gRotate(180, 0, 0.5, 0.25);
 		setColor(vec4(1, 0.5, 0, 1));
-		gScale(0.4, 0.4, 2);
+		gScale(0.2, 0.4, 2);
+		drawCone();
+		gPop();
+		// ventral fin
+		gPush();
+		gTranslate(0, -0.5, -3.75);
+		gRotate(180, 0, 1, -0.5);
+		setColor(vec4(1, 0.5, 0, 1));
+		gScale(0.2, 0.4, 1.3);
 		drawCone();
 		gPop();
 	})();
