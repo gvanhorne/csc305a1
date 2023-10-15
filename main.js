@@ -317,6 +317,8 @@ function drawSeaweeds() {
  */
 function drawFish(posX, posY, posZ, rotationSpeed) {
     gPush();
+	gScale(0.75, 0.75, 0.75);
+	gPush();
 	(function drawFishBody() {
 		gTranslate(posX, posY, posZ);
 		gPush();
