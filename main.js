@@ -61,7 +61,7 @@ var cylinderRotation = [0,0,0];
 var cylinderPosition = [1.1,0,0];
 
 var fishRotation = [0,0,0];
-var fishPosition = [0,-3.25,0];
+var fishPosition = [0,-1.25,0];
 
 // Setting the colour which is needed during illumination of a surface
 function setColor(c)
@@ -368,6 +368,7 @@ function drawFish(posX, posY, posZ, rotationSpeed) {
 		gPush();
 		gTranslate(0, 0.75, -3.85);
 		gRotate(180, 0, 0.5, 0.25);
+		gRotate(25*Math.sin(0.010*TIME), 0, 1, 1);
 		setColor(vec4(1, 0.5, 0, 1));
 		gScale(0.2, 0.4, 2);
 		drawCone();
@@ -376,6 +377,7 @@ function drawFish(posX, posY, posZ, rotationSpeed) {
 		gPush();
 		gTranslate(0, -0.5, -3.75);
 		gRotate(180, 0, 1, -0.5);
+		gRotate(25*Math.sin(0.010*TIME), 0, 1, 1);
 		setColor(vec4(1, 0.5, 0, 1));
 		gScale(0.2, 0.4, 1.3);
 		drawCone();
