@@ -315,31 +315,33 @@ function drawSeaweeds() {
  * @param {number} posZ - The z-coordinate of the cone's position.
  * @param {number} rotationSpeed - The rotation speed for the first cone (degrees per second).
  */
-function drawFishBody(posX, posY, posZ, rotationSpeed) {
+function drawFish(posX, posY, posZ, rotationSpeed) {
     gPush();
-    gTranslate(posX, posY, posZ);
-    gPush();
-    {
-		// Draw fish body
-        setColor(vec4(1, 0.5, 0, 1));
-        coneRotation[1] = coneRotation[1] + rotationSpeed*dt; // Update rotation
-        gRotate(coneRotation[1], 0, 1, 0);
-        gScale(0.75, 0.75, 2.5);
-        drawCone();
-    }
-    gPop();
-
-    gPush();
-    {
-		// Draw fish head
-        gRotate(coneRotation[1] + 180, 0, 1, 0); // Rotate by 180 degrees
+	(function drawFishBody() {
+		gTranslate(posX, posY, posZ);
+		gPush();
+		{
+			// Draw fish body
+			setColor(vec4(1, 0.5, 0, 1));
+			coneRotation[1] = coneRotation[1] + rotationSpeed*dt; // Update rotation
+			gRotate(coneRotation[1], 0, 1, 0);
+			gScale(0.75, 0.75, 2.5);
+			drawCone();
+		}
+		gPop();
+	})();
+	(function drawFishHead() {
+		gPush();
+		gRotate(coneRotation[1] + 180, 0, 1, 0); // Rotate by 180 degrees
         gTranslate(0, 0, 1.62);
         setColor(vec4(1, 0.5, 0, 1));
         gScale(0.75, 0.75, 0.75);
         drawCone();
+	})();
+	(function drawFishEyes() {
 		// Draw fish eyes
 		gPush();
-        setColor(vec4(1, 1, 1, 1));
+		setColor(vec4(1, 1, 1, 1));
 		gTranslate(0.5, 0.5, -0.15);
 		gScale(0.25, 0.25, 0.25);
 		drawSphere();
@@ -349,18 +351,17 @@ function drawFishBody(posX, posY, posZ, rotationSpeed) {
 		drawSphere();
 		gPop();
 		gPush();
-        setColor(vec4(1, 1, 1, 1));
+		setColor(vec4(1, 1, 1, 1));
 		gTranslate(-0.5, 0.5, -0.15);
 		gScale(0.25, 0.25, 0.25);
 		drawSphere();
-        setColor(vec4(0, 0, 0, 1));
+		setColor(vec4(0, 0, 0, 1));
 		gTranslate(0, 0, 0.75);
 		gScale(0.5, 0.5, 0.5);
 		drawSphere();
 		gPop();
-    }
-    gPop();
-
+		gPop();
+	})();
     gPop();
 }
 
@@ -403,7 +404,7 @@ function render(timestamp) {
 	drawRock(smallRockPosition[0], smallRockPosition[1], smallRockPosition[2], 0.4);
 	drawGround(6);
 	drawSeaweeds();
-	drawFishBody(conePosition[0], conePosition[1], conePosition[2], 30);
+	drawFish(conePosition[0], conePosition[1], conePosition[2], 30);
 
 	// // Cylinder example
 	// gPush();
