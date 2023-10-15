@@ -282,8 +282,7 @@ function drawSeaweedFrond(posX, posY, posZ) {
 	  for (let i = 0; i < 9; i++) {
 		gPush();
 		gTranslate(0, 0.6, 0);
-		gRotate(15*Math.cos(0.0015*Date.now() + i), 0, 0, 1);
-
+		gRotate(15*Math.cos(0.0010*Date.now() + i), 0, 0, 1);
 		gPush();
 		gScale(0.15, 0.30, 0.3);
 		drawSphere();
