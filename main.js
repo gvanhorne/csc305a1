@@ -359,8 +359,17 @@ function drawFish(posX, posY, posZ, rotationSpeed) {
 		// Right eye
 		drawEye(-0.5, 0.5, -0.15);
 		gPop();
+	})();
+	(function drawFishTail() {
+		gPush();
+		gTranslate(0, 0.5, -4.5);
+		gRotate(180, 0, 1, 0.25);
+		setColor(vec4(1, 0.5, 0, 1));
+		gScale(0.4, 0.4, 2);
+		drawCone();
 		gPop();
 	})();
+	gPop();
     gPop();
 }
 
