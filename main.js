@@ -306,6 +306,41 @@ function drawSeaweeds() {
 	drawSeaweedFrond(largeRockPosition[0], largeRockPosition[1] + 1, largeRockPosition[2] - 1)
 	drawSeaweedFrond(largeRockPosition[0] - 0.65, largeRockPosition[1] + 0.5, spherePosition[2] - 1)
 }
+
+/**
+ * Draw a pair of cones with specified parameters.
+ *
+ * @param {number} posX - The x-coordinate of the cone's position.
+ * @param {number} posY - The y-coordinate of the cone's position.
+ * @param {number} posZ - The z-coordinate of the cone's position.
+ * @param {number} rotationSpeed - The rotation speed for the first cone (degrees per second).
+ */
+function drawFishBody(posX, posY, posZ, rotationSpeed) {
+    gPush();
+    gTranslate(posX, posY, posZ);
+    gPush();
+    {
+        setColor(vec4(1, 0.5, 0, 1));
+        coneRotation[1] = coneRotation[1] + rotationSpeed*dt; // Update rotation
+        gRotate(coneRotation[1], 0, 1, 0);
+        gScale(0.75, 0.75, 2.5);
+        drawCone();
+    }
+    gPop();
+
+    gPush();
+    {
+        gRotate(coneRotation[1] + 180, 0, 1, 0); // Rotate by 180 degrees
+        gTranslate(0, 0, 1.62);
+        setColor(vec4(1, 0.5, 0, 1));
+        gScale(0.75, 0.75, 0.75);
+        drawCone();
+    }
+    gPop();
+
+    gPop();
+}
+
 function render(timestamp) {
 	TIME = timestamp;
     gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -345,6 +380,7 @@ function render(timestamp) {
 	drawRock(smallRockPosition[0], smallRockPosition[1], smallRockPosition[2], 0.4);
 	drawGround(6);
 	drawSeaweeds();
+	drawFishBody(conePosition[0], conePosition[1], conePosition[2], 30);
 
 	// // Cylinder example
 	// gPush();
