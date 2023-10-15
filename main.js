@@ -49,8 +49,8 @@ var controller;
 // These are used to store the current state of objects.
 // In animation it is often useful to think of an object as having some DOF
 // Then the animation is simply evolving those DOF over time.
-var sphereRotation = [0,0,0];
-var spherePosition = [0,-3.25,0];
+var largeRockPosition = [0, -3.25, 0];
+var smallRockPosition = [-1.2, -3.6, 0]
 
 var cubeRotation = [0,0,0];
 var cubePosition = [0,-5,0];
@@ -339,8 +339,8 @@ function render(timestamp) {
 	}
 
 	// Draw large center rock + smaller offset rock
-	drawRock(spherePosition[0], spherePosition[1], spherePosition[2], 0.75);
-	drawRock(spherePosition[0] - 1.2, spherePosition[1] - 0.35, spherePosition[1], 0.4);
+	drawRock(largeRockPosition[0], largeRockPosition[1], largeRockPosition[2], 0.75);
+	drawRock(smallRockPosition[0], smallRockPosition[1], smallRockPosition[2], 0.4);
 	drawGround(6);
 	drawSeaweeds();
 
@@ -357,18 +357,19 @@ function render(timestamp) {
 	// 	gPop();
 	// gPop();
 
-	// // Cone example
-	// gPush();
-	// 	gTranslate(conePosition[0],conePosition[1],conePosition[2]);
-	// 	gPush();
-	// 	{
-	// 		setColor(vec4(1.0,1.0,0.0,1.0));
-	// 		coneRotation[1] = coneRotation[1] + 90*dt;
-	// 		gRotate(coneRotation[1],0,1,0);
-	// 		drawCone();
-	// 	}
-	// 	gPop();
-	// gPop();
+	// Cone example
+	gPush();
+		gTranslate(conePosition[0],conePosition[1],conePosition[2]);
+		gPush();
+		{
+			setColor(vec4(1.0,1.0,0.0,1.0));
+			coneRotation[1] = coneRotation[1] + 90*dt;
+			gRotate(coneRotation[1],0,1,0);
+			gScale(0.75, 0.75, 2.5);
+			drawCone();
+		}
+		gPop();
+	gPop();
 
     if( animFlag )
         window.requestAnimFrame(render);
