@@ -282,7 +282,7 @@ function drawSeaweedFrond(posX, posY, posZ) {
 	  for (let i = 0; i < 9; i++) {
 		gPush();
 		gTranslate(0, 0.6, 0);
-		gRotate(15*Math.cos(0.0010*Date.now() + i), 0, 0, 1);
+		gRotate(15*Math.cos(0.0010*TIME + i), 0, 0, 1);
 		gPush();
 		gScale(0.15, 0.30, 0.3);
 		drawSphere();
@@ -305,7 +305,7 @@ function drawSeaweeds() {
 	drawSeaweedFrond(spherePosition[0] - 0.65, spherePosition[1] + 0.5, spherePosition[2] - 1)
 }
 function render(timestamp) {
-
+	TIME = timestamp;
     gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
     eye = vec3(0,0,10);
