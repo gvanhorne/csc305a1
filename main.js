@@ -272,18 +272,27 @@ function drawGround(width) {
 function drawSeaweedFrond(posX, posY, posZ) {
 	gPush();
 	gTranslate(posX, posY, posZ);
-	gScale(0.15, 0.30, 0.5);
 	gPush();
 	{
 	  // Set the color to green
 	  setColor(vec4(0, 1, 0, 1));
+      gScale(0.15, 0.30, 0.3);
 	  drawSphere();
+	  gPop();
 	  for (let i = 0; i < 9; i++) {
-		gTranslate(0, 2.0, 1);
+		gPush();
+		gTranslate(0, 0.6, 0);
+		gRotate(15*Math.cos(0.0015*Date.now() + i), 0, 0, 1);
+
+		gPush();
+		gScale(0.15, 0.30, 0.3);
 		drawSphere();
+		gPop();
+	  }
+	  for (let i = 0; i < 9; i++) {
+		gPop();
 	  }
 	}
-	gPop();
 	gPop();
   }
 
