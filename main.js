@@ -364,13 +364,23 @@ function render(timestamp) {
 		gTranslate(conePosition[0],conePosition[1],conePosition[2]);
 		gPush();
 		{
-			setColor(vec4(1.0,1.0,0.0,1.0));
+			setColor(vec4(1, 0.5, 0, 1));
 			coneRotation[1] = coneRotation[1] + 90*dt;
 			gRotate(coneRotation[1],0,1,0);
 			gScale(0.75, 0.75, 2.5);
 			drawCone();
+			gPop();
 		}
-		gPop();
+		gPush();
+		{
+			gRotate(coneRotation[1] + 180, 0, 1, 0); // Rotate by 180 degrees
+			gTranslate(0, 0, 1.62)
+			setColor(vec4(1, 0.5, 0, 1));
+			// gRotate(coneRotation[1],0,1,0);
+			gScale(0.75, 0.75, 0.75);
+			drawCone();
+			gPop();
+		}
 	gPop();
 
     if( animFlag )
