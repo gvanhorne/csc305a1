@@ -262,6 +262,31 @@ function drawGround(width) {
 	gPop();
   }
 
+/**
+ * Draw a seaweed frond with 10 leaves in the given position
+ *
+ * @param {number} posX - The x-coordinate of the seaweed leaf's position.
+ * @param {number} posY - The y-coordinate of the seaweed leaf's position.
+ * @param {number} posZ - The z-coordinate of the seaweed leaf's position.
+ */
+function drawSeaweedLeaf(posX, posY, posZ) {
+	gPush();
+	gTranslate(posX, posY, posZ);
+	gScale(0.15, 0.30, 0.5);
+	gPush();
+	{
+	  // Set the color to green
+	  setColor(vec4(0, 1, 0, 1));
+	  drawSphere();
+	  for (let i = 0; i < 9; i++) {
+		gTranslate(0, 2.0, 1);
+		drawSphere();
+	  }
+	}
+	gPop();
+	gPop();
+  }
+
 function render(timestamp) {
 
     gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -300,32 +325,36 @@ function render(timestamp) {
 	drawRock(spherePosition[0], spherePosition[1], spherePosition[2], 0.75);
 	drawRock(spherePosition[0] - 1.2, spherePosition[1] - 0.35, spherePosition[1], 0.4);
 	drawGround(6);
+	drawSeaweedLeaf(spherePosition[0] + 0.65, spherePosition[1] + .5, spherePosition[2] - 1)
+	drawSeaweedLeaf(spherePosition[0], spherePosition[1] + 1, spherePosition[2] - 1)
+	drawSeaweedLeaf(spherePosition[0] - 0.65, spherePosition[1] + 0.5, spherePosition[2] - 1)
 
-	// Cylinder example
-	gPush();
-		gTranslate(cylinderPosition[0],cylinderPosition[1],cylinderPosition[2]);
-		gPush();
-		{
-			setColor(vec4(0.0,0.0,1.0,1.0));
-			cylinderRotation[1] = cylinderRotation[1] + 60*dt;
-			gRotate(cylinderRotation[1],0,1,0);
-			drawCylinder();
-		}
-		gPop();
-	gPop();
 
-	// Cone example
-	gPush();
-		gTranslate(conePosition[0],conePosition[1],conePosition[2]);
-		gPush();
-		{
-			setColor(vec4(1.0,1.0,0.0,1.0));
-			coneRotation[1] = coneRotation[1] + 90*dt;
-			gRotate(coneRotation[1],0,1,0);
-			drawCone();
-		}
-		gPop();
-	gPop();
+	// // Cylinder example
+	// gPush();
+	// 	gTranslate(cylinderPosition[0],cylinderPosition[1],cylinderPosition[2]);
+	// 	gPush();
+	// 	{
+	// 		setColor(vec4(0.0,0.0,1.0,1.0));
+	// 		cylinderRotation[1] = cylinderRotation[1] + 60*dt;
+	// 		gRotate(cylinderRotation[1],0,1,0);
+	// 		drawCylinder();
+	// 	}
+	// 	gPop();
+	// gPop();
+
+	// // Cone example
+	// gPush();
+	// 	gTranslate(conePosition[0],conePosition[1],conePosition[2]);
+	// 	gPush();
+	// 	{
+	// 		setColor(vec4(1.0,1.0,0.0,1.0));
+	// 		coneRotation[1] = coneRotation[1] + 90*dt;
+	// 		gRotate(coneRotation[1],0,1,0);
+	// 		drawCone();
+	// 	}
+	// 	gPop();
+	// gPop();
 
     if( animFlag )
         window.requestAnimFrame(render);
