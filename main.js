@@ -320,6 +320,7 @@ function drawFishBody(posX, posY, posZ, rotationSpeed) {
     gTranslate(posX, posY, posZ);
     gPush();
     {
+		// Draw fish body
         setColor(vec4(1, 0.5, 0, 1));
         coneRotation[1] = coneRotation[1] + rotationSpeed*dt; // Update rotation
         gRotate(coneRotation[1], 0, 1, 0);
@@ -330,11 +331,33 @@ function drawFishBody(posX, posY, posZ, rotationSpeed) {
 
     gPush();
     {
+		// Draw fish head
         gRotate(coneRotation[1] + 180, 0, 1, 0); // Rotate by 180 degrees
         gTranslate(0, 0, 1.62);
         setColor(vec4(1, 0.5, 0, 1));
         gScale(0.75, 0.75, 0.75);
         drawCone();
+		// Draw fish eyes
+		gPush();
+        setColor(vec4(1, 1, 1, 1));
+		gTranslate(0.5, 0.5, -0.15);
+		gScale(0.25, 0.25, 0.25);
+		drawSphere();
+		setColor(vec4(0, 0, 0, 1));
+		gTranslate(0, 0, 0.75);
+		gScale(0.5, 0.5, 0.5);
+		drawSphere();
+		gPop();
+		gPush();
+        setColor(vec4(1, 1, 1, 1));
+		gTranslate(-0.5, 0.5, -0.15);
+		gScale(0.25, 0.25, 0.25);
+		drawSphere();
+        setColor(vec4(0, 0, 0, 1));
+		gTranslate(0, 0, 0.75);
+		gScale(0.5, 0.5, 0.5);
+		drawSphere();
+		gPop();
     }
     gPop();
 
