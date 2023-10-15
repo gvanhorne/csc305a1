@@ -55,7 +55,7 @@ var largeRockPosition = [0, -3.25, 0];
 var smallRockPosition = [-1.2, -3.6, 0]
 
 var cubeRotation = [0,0,0];
-var cubePosition = [0,-5,0];
+var groundPosition = [0,-5,0];
 
 var cylinderRotation = [0,0,0];
 var cylinderPosition = [1.1,0,0];
@@ -253,7 +253,7 @@ function drawRock(posX, posY, posZ, scale) {
  */
 function drawGround(width) {
 	gPush();
-	gTranslate(cubePosition[0], cubePosition[1], cubePosition[2]);
+	gTranslate(groundPosition[0], groundPosition[1], groundPosition[2]);
 	gScale(width, 1, 1);
 	gPush();
 	{
@@ -387,6 +387,10 @@ function drawFish(posX, posY, posZ, rotationSpeed) {
     gPop();
 }
 
+function drawDiver() {
+	drawCube();
+}
+
 function render(timestamp) {
 	TIME = timestamp;
     gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -427,6 +431,7 @@ function render(timestamp) {
 	drawGround(6);
 	drawSeaweeds();
 	drawFish(fishPosition[0], fishPosition[1], fishPosition[2], 30);
+	drawDiver();
 
 	// // Cylinder example
 	// gPush();
