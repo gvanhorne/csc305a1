@@ -339,26 +339,25 @@ function drawFish(posX, posY, posZ, rotationSpeed) {
         drawCone();
 	})();
 	(function drawFishEyes() {
-		// Draw fish eyes
+		function drawEye(x, y, z) {
+			// Draw whites of the eye
+			gPush();
+			setColor(vec4(1, 1, 1, 1));
+			gTranslate(x, y, z);
+			gScale(0.25, 0.25, 0.25);
+			drawSphere();
+			// Draw small black pupil
+			setColor(vec4(0, 0, 0, 1));
+			gTranslate(0, 0, 0.75);
+			gScale(0.5, 0.5, 0.5);
+			drawSphere();
+			gPop();
+		}
 		gPush();
-		setColor(vec4(1, 1, 1, 1));
-		gTranslate(0.5, 0.5, -0.15);
-		gScale(0.25, 0.25, 0.25);
-		drawSphere();
-		setColor(vec4(0, 0, 0, 1));
-		gTranslate(0, 0, 0.75);
-		gScale(0.5, 0.5, 0.5);
-		drawSphere();
-		gPop();
-		gPush();
-		setColor(vec4(1, 1, 1, 1));
-		gTranslate(-0.5, 0.5, -0.15);
-		gScale(0.25, 0.25, 0.25);
-		drawSphere();
-		setColor(vec4(0, 0, 0, 1));
-		gTranslate(0, 0, 0.75);
-		gScale(0.5, 0.5, 0.5);
-		drawSphere();
+		// Left eye
+		drawEye(0.5, 0.5, -0.15);
+		// Right eye
+		drawEye(-0.5, 0.5, -0.15);
 		gPop();
 		gPop();
 	})();
