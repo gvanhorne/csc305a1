@@ -49,6 +49,8 @@ var controller;
 // These are used to store the current state of objects.
 // In animation it is often useful to think of an object as having some DOF
 // Then the animation is simply evolving those DOF over time.
+var sphereRotation = [0,0,0];
+var spherePosition = [0,-3.25,0];
 var largeRockPosition = [0, -3.25, 0];
 var smallRockPosition = [-1.2, -3.6, 0]
 
@@ -300,9 +302,9 @@ function drawSeaweedFrond(posX, posY, posZ) {
  * One frond for the left, center, and right of the large rock in scene.
  */
 function drawSeaweeds() {
-	drawSeaweedFrond(spherePosition[0] + 0.65, spherePosition[1] + .5, spherePosition[2] - 1)
-	drawSeaweedFrond(spherePosition[0], spherePosition[1] + 1, spherePosition[2] - 1)
-	drawSeaweedFrond(spherePosition[0] - 0.65, spherePosition[1] + 0.5, spherePosition[2] - 1)
+	drawSeaweedFrond(largeRockPosition[0] + 0.65, largeRockPosition[1] + .5, largeRockPosition[2] - 1)
+	drawSeaweedFrond(largeRockPosition[0], largeRockPosition[1] + 1, largeRockPosition[2] - 1)
+	drawSeaweedFrond(largeRockPosition[0] - 0.65, largeRockPosition[1] + 0.5, spherePosition[2] - 1)
 }
 function render(timestamp) {
 	TIME = timestamp;
