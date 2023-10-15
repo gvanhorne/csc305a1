@@ -269,7 +269,7 @@ function drawGround(width) {
  * @param {number} posY - The y-coordinate of the seaweed leaf's position.
  * @param {number} posZ - The z-coordinate of the seaweed leaf's position.
  */
-function drawSeaweedLeaf(posX, posY, posZ) {
+function drawSeaweedFrond(posX, posY, posZ) {
 	gPush();
 	gTranslate(posX, posY, posZ);
 	gScale(0.15, 0.30, 0.5);
@@ -287,6 +287,15 @@ function drawSeaweedLeaf(posX, posY, posZ) {
 	gPop();
   }
 
+/**
+ * Draw all three seaweed fronds.
+ * One frond for the left, center, and right of the large rock in scene.
+ */
+function drawSeaweeds() {
+	drawSeaweedFrond(spherePosition[0] + 0.65, spherePosition[1] + .5, spherePosition[2] - 1)
+	drawSeaweedFrond(spherePosition[0], spherePosition[1] + 1, spherePosition[2] - 1)
+	drawSeaweedFrond(spherePosition[0] - 0.65, spherePosition[1] + 0.5, spherePosition[2] - 1)
+}
 function render(timestamp) {
 
     gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -325,10 +334,7 @@ function render(timestamp) {
 	drawRock(spherePosition[0], spherePosition[1], spherePosition[2], 0.75);
 	drawRock(spherePosition[0] - 1.2, spherePosition[1] - 0.35, spherePosition[1], 0.4);
 	drawGround(6);
-	drawSeaweedLeaf(spherePosition[0] + 0.65, spherePosition[1] + .5, spherePosition[2] - 1)
-	drawSeaweedLeaf(spherePosition[0], spherePosition[1] + 1, spherePosition[2] - 1)
-	drawSeaweedLeaf(spherePosition[0] - 0.65, spherePosition[1] + 0.5, spherePosition[2] - 1)
-
+	drawSeaweeds();
 
 	// // Cylinder example
 	// gPush();
