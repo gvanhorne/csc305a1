@@ -390,6 +390,7 @@ function drawFish(posX, posY, posZ, rotationSpeed) {
 }
 
 function drawDiver() {
+	setColor(vec4(1, 1, 0, 1));
 	gPush();
 	gTranslate(diverPosition[0], diverPosition[1], diverPosition[2]);
 	diverPosition[0] = diverPosition[0] + 0.01*Math.cos(0.001*TIME);
@@ -404,49 +405,60 @@ function drawDiver() {
 	(function drawDiverHead() {
 		gPush();
 		gTranslate(0, 2.20, 0);
-		gScale(0.65, 0.65, 0.65)
+		gScale(0.65, 0.65, 1)
 		drawSphere();
 		gPop();
 	})();
 	(function drawDiverLeg() {
-		gPush();
-		gRotate(10, 1, 0, 1);
-		gTranslate(-.9, -2.4, -0.1);
-		gScale(0.25, 0.85, 0.5);
+		gTranslate(-.5, -2.25, 0);
+		gRotate(15*Math.cos(0.0015*TIME), 0.5, 0, 0.0);
+		gRotate(-20, 0, 1, 0);
+		gRotate(35, 1, 0, 0);
 		gPush();
 		// Upper section of leg
-		drawCube();
-		gRotate(10, 1, 1, 0);
-		gRotate(10, 1, 0, 0);
-		gTranslate(0, -2.0, 0);
-		// Lower section of leg
-		drawCube();
 		gPush();
-		gTranslate(0, -1.0, 0.5);
-		gScale(1, .1, 1.5);
+		gScale(0.25, 1, 0.25);
+		drawCube();
+		gPop();
+
+		gPush();
+		gRotate(15*Math.cos(0.0015*TIME), 0.5, 0, 0.0);
+		gTranslate(0, -2, -0.35);
+		gRotate(20, 1, 0, -0.25);
+
+		// Lower section of leg
+		gPush();
+		gScale(0.25, 1, 0.25);
+		drawCube();
+		gPop();
+		gTranslate(0, -1, 0.25);
+		gScale(0.25, .1, 0.5);
+		gPush();
 		// Foot
 		drawCube();
 		gPop();
 		gPop();
 		gPop();
 
-		gPush();
-		gRotate(10, 1, 0, 1);
-		gTranslate(0.4, -2.5, -0.1);
-		gScale(0.25, 0.85, 0.5);
-		gPush();
-		// Upper section of leg
-		drawCube();
-		gRotate(10, 1, 1, 0);
-		gRotate(10, 1, 0, 0);
-		gTranslate(0, -2.0, 0);
-		// Lower section of leg
-		drawCube();
-		gPush();
-		gTranslate(0, -1.0, 0.5);
-		gScale(1, .1, 1.5);
-		// Foot
-		drawCube();
+		// gPush();
+		// gRotate(10, 1, -1, 1);
+		// gRotate(15*Math.sin(0.0015*TIME + 5), 1, 0, 0);
+		// gTranslate(0.4, -2.35, -0.1);
+		// gScale(0.25, 0.85, 0.4);
+		// gPush();
+		// // Upper section of leg
+		// drawCube();
+		// gRotate(10, 1, 1, 0);
+		// gRotate(10, 1, 0, 0);
+		// gRotate(10*Math.sin(0.0015*TIME + 5), 1, 0, 0);
+		// gTranslate(0, -1.9, 0);
+		// // Lower section of leg
+		// drawCube();
+		// gPush();
+		// gTranslate(0, -1.0, 0.5);
+		// gScale(1, .1, 1.5);
+		// // Foot
+		// drawCube();
 	})();
 	gPop();
 	gPop();
