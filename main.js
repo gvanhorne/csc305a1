@@ -68,8 +68,15 @@ var diverPosition = [5, 2, 0];
 var mouthPosition = [0, 0, 0];
 var lastBubbleTime = 0;
 var bubbleInterval = 5000;
-var bubbleFrameCounter = 0;
-var bubblePositions = [0, 0, 0, 0, 0, 0];
+var bubbleCount = 0;
+var bubblePositions = [
+	[
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	],
+	[
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	]
+];
 
 // Setting the colour which is needed during illumination of a surface
 function setColor(c)
@@ -265,7 +272,7 @@ function drawGround(width) {
 	gScale(width, 1, 1);
 	gPush();
 	{
-	  setColor(vec4(0.0, 0.0, 0.0, 1.0));
+	  setColor(vec4(0.05, 0.1, 0.20, 1.0));
 	  drawCube();
 	}
 	gPop();
@@ -481,25 +488,29 @@ function drawDiver() {
 function drawBubbles() {
     gPush();
     setColor(vec4(1, 1, 1, 1));
-    gTranslate(mouthPosition[0], mouthPosition[1], mouthPosition[2]);
     gTranslate(0, 0, 1);
 
-    function drawBubble(posY) {
-        gPush();
-        gScale(0.12, 0.12, 0.12);
-        gTranslate(0, posY, 0);
-        drawSphere();
-        gPop();
+    function drawBubble(posX, posY) {
+				if (posX !== 0) {
+					gPush();
+					gTranslate(posX, posY, 0);
+					gScale(0.12, 0.12, 0.12);
+					drawSphere();
+					gPop();
+				}
     }
 	if (TIME - lastBubbleTime >= bubbleInterval) {
-		for (let i = 0; i < 4; i++) {
-			bubblePositions[i] = 0;
-		}
+		bubbleCount = 0;
 		lastBubbleTime = TIME;
 	}
+	if (bubbleCount < 4 && TIME - lastBubbleTime > 275*bubbleCount) {
+		bubblePositions[0][bubbleCount] = mouthPosition[0];
+		bubblePositions[1][bubbleCount] = mouthPosition[1];
+		bubbleCount++;
+	}
 	for (let i = 0; i < 4; i++) {
-		bubblePositions[i] = bubblePositions[i] + 7*dt;
-		drawBubble(bubblePositions[i]);
+		bubblePositions[1][i] = bubblePositions[1][i] + 1*dt;
+		drawBubble(bubblePositions[0][i], bubblePositions[1][i]);
 	}
     gPop();
 }
