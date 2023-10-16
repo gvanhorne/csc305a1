@@ -67,7 +67,8 @@ var diverPosition = [5, 2, 0];
 
 var mouthPosition = [0, 0, 0];
 var lastBubbleTime = 0;
-var bubbleInterval = 3000;
+var bubbleInterval = 5000;
+var bubbleFrameCounter = 0;
 var bubblePositions = [0, 0, 0, 0, 0, 0];
 
 // Setting the colour which is needed during illumination of a surface
@@ -490,8 +491,16 @@ function drawBubbles() {
         drawSphere();
         gPop();
     }
-	bubblePositions[0] = bubblePositions[0] + 5*dt;
-	drawBubble(bubblePositions[0]);
+	if (TIME - lastBubbleTime >= bubbleInterval) {
+		for (let i = 0; i < 4; i++) {
+			bubblePositions[i] = 0;
+		}
+		lastBubbleTime = TIME;
+	}
+	for (let i = 0; i < 4; i++) {
+		bubblePositions[i] = bubblePositions[i] + 7*dt;
+		drawBubble(bubblePositions[i]);
+	}
     gPop();
 }
 
