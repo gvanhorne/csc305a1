@@ -63,6 +63,8 @@ var cylinderPosition = [1.1,0,0];
 var fishRotation = [0,0,0];
 var fishPosition = [0,-1.25,0];
 
+var diverPosition = [5, 2, 0];
+
 // Setting the colour which is needed during illumination of a surface
 function setColor(c)
 {
@@ -389,7 +391,9 @@ function drawFish(posX, posY, posZ, rotationSpeed) {
 
 function drawDiver() {
 	gPush();
-	gTranslate(5, 2, 0);
+	gTranslate(diverPosition[0], diverPosition[1], diverPosition[2]);
+	diverPosition[0] = diverPosition[0] + 0.01*Math.cos(0.001*TIME);
+	diverPosition[1] = diverPosition[1] + 0.01*Math.cos(0.001*TIME);
 	gRotate(-15, 0, 1, 0);
 	(function drawDiverBody() {
 		gPush();
