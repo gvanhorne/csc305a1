@@ -68,6 +68,7 @@ var diverPosition = [5, 2, 0];
 var mouthPosition = [0, 0, 0];
 var lastBubbleTime = 0;
 var bubbleInterval = 3000;
+var bubblePositions = [0, 0, 0, 0, 0, 0];
 
 // Setting the colour which is needed during illumination of a surface
 function setColor(c)
@@ -477,12 +478,21 @@ function drawDiver() {
 }
 
 function drawBubbles() {
-	gPush();
-	setColor(vec4(1, 1, 1, 1));
-	gTranslate(mouthPosition[0], mouthPosition[1], mouthPosition[2]);
-	gTranslate(0, 0, 1);
-	gScale(0.12, 0.12, 0.12);
-	drawSphere();
+    gPush();
+    setColor(vec4(1, 1, 1, 1));
+    gTranslate(mouthPosition[0], mouthPosition[1], mouthPosition[2]);
+    gTranslate(0, 0, 1);
+
+    function drawBubble(posY) {
+        gPush();
+        gScale(0.12, 0.12, 0.12);
+        gTranslate(0, posY, 0);
+        drawSphere();
+        gPop();
+    }
+	bubblePositions[0] = bubblePositions[0] + 5*dt;
+	drawBubble(bubblePositions[0]);
+    gPop();
 }
 
 function render(timestamp) {
