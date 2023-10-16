@@ -388,7 +388,64 @@ function drawFish(posX, posY, posZ, rotationSpeed) {
 }
 
 function drawDiver() {
-	drawCube();
+	gPush();
+	gTranslate(5, 2, 0);
+	gRotate(-15, 0, 1, 0);
+	(function drawDiverBody() {
+		gPush();
+		gScale(1, 1.55, 1);
+		drawCube();
+		gPop();
+	})();
+	(function drawDiverHead() {
+		gPush();
+		gTranslate(0, 2.20, 0);
+		gScale(0.65, 0.65, 0.65)
+		drawSphere();
+		gPop();
+	})();
+	(function drawDiverLeg() {
+		gPush();
+		gRotate(10, 1, 0, 1);
+		gTranslate(-.9, -2.4, -0.1);
+		gScale(0.25, 0.85, 0.5);
+		gPush();
+		// Upper section of leg
+		drawCube();
+		gRotate(10, 1, 1, 0);
+		gRotate(10, 1, 0, 0);
+		gTranslate(0, -2.0, 0);
+		// Lower section of leg
+		drawCube();
+		gPush();
+		gTranslate(0, -1.0, 0.5);
+		gScale(1, .1, 1.5);
+		// Foot
+		drawCube();
+		gPop();
+		gPop();
+		gPop();
+
+		gPush();
+		gRotate(10, 1, 0, 1);
+		gTranslate(0.4, -2.5, -0.1);
+		gScale(0.25, 0.85, 0.5);
+		gPush();
+		// Upper section of leg
+		drawCube();
+		gRotate(10, 1, 1, 0);
+		gRotate(10, 1, 0, 0);
+		gTranslate(0, -2.0, 0);
+		// Lower section of leg
+		drawCube();
+		gPush();
+		gTranslate(0, -1.0, 0.5);
+		gScale(1, .1, 1.5);
+		// Foot
+		drawCube();
+	})();
+	gPop();
+	gPop();
 }
 
 function render(timestamp) {
