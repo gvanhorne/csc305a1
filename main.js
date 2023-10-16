@@ -410,12 +410,21 @@ function drawDiver() {
 		drawSphere();
 		gPop();
 	})();
-	(function drawDiverLeg() {
-		gTranslate(-.4, -2.35, 0);
-		gRotate(15*Math.cos(0.0015*TIME), 0.5, 0, 0.0);
+	/**
+	 * Draw a diver's leg with multiple sections.
+	 *
+	 * @param {boolean} isLeft - If true, draw the left leg; otherwise, draw the right leg.
+	 */
+	function drawDiverLeg(isLeft) {
+		const legOffset = isLeft ? -0.4 : 0.6;
+		const legRotation = isLeft ? 15 * Math.cos(0.0015 * TIME) : 15 * Math.sin(0.0015 * TIME + 11);
+
+		gTranslate(legOffset, -2.35, 0);
+		gRotate(legRotation, 0.5, 0, 0.0);
 		gRotate(-20, 0, 1, 0);
 		gRotate(35, 1, 0, 0);
 		gPush();
+
 		// Upper section of leg
 		gPush();
 		gScale(0.25, 1, 0.25);
@@ -423,7 +432,7 @@ function drawDiver() {
 		gPop();
 
 		gPush();
-		gRotate(15*Math.cos(0.0015*TIME), 0.5, 0, 0.0);
+		gRotate(legRotation, 0.5, 0, 0.0);
 		gTranslate(0, -2, -0.35);
 		gRotate(20, 1, 0, -0.25);
 
@@ -432,48 +441,21 @@ function drawDiver() {
 		gScale(0.25, 1, 0.25);
 		drawCube();
 		gPop();
+
 		gTranslate(0, -1, 0.25);
-		gScale(0.25, .1, 0.5);
+		gScale(0.25, 0.1, 0.5);
 		gPush();
+
 		// Foot
 		drawCube();
-		gPop();
-		gPop();
-		gPop();
-		gPop();
 
-		gTranslate(0.6, -2.35, 0);
-		gRotate(15*Math.sin(0.0015*TIME + 11), 0.5, 0, 0.0);
-		gRotate(-20, 0, 1, 0);
-		gRotate(35, 1, 0, 0);
-		gPush();
-		// Upper section of leg
-		gPush();
-		gScale(0.25, 1, 0.25);
-		drawCube();
-		gPop();
-
-		gPush();
-		gRotate(15*Math.sin(0.0015*TIME + 11), 0.5, 0, 0.0);
-		gTranslate(0, -2, -0.35);
-		gRotate(20, 1, 0, -0.25);
-
-		// Lower section of leg
-		gPush();
-		gScale(0.25, 1, 0.25);
-		drawCube();
-		gPop();
-		gTranslate(0, -1, 0.25);
-		gScale(0.25, .1, 0.5);
-		gPush();
-		// Foot
-		drawCube();
 		gPop();
 		gPop();
 		gPop();
-	})();
-	gPop();
-	gPop();
+		gPop();
+	}
+	drawDiverLeg(true);
+	drawDiverLeg(false);
 	gPop();
 }
 
