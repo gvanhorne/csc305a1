@@ -67,7 +67,7 @@ var diverPosition = [5, 2, 0];
 
 var mouthPosition = [0, 0, 0];
 var lastBubbleTime = 0;
-var bubbleInterval = 5000;
+var bubbleInterval = 4250;
 var bubbleCount = 0;
 var bubblePositions = [
 	[
@@ -503,13 +503,13 @@ function drawBubbles() {
 		bubbleCount = 0;
 		lastBubbleTime = TIME;
 	}
-	if (bubbleCount < 4 && TIME - lastBubbleTime > 275*bubbleCount) {
+	if (bubbleCount < 4 && TIME - lastBubbleTime > 375*bubbleCount) {
 		bubblePositions[0][bubbleCount] = mouthPosition[0];
 		bubblePositions[1][bubbleCount] = mouthPosition[1];
 		bubbleCount++;
 	}
-	for (let i = 0; i < 4; i++) {
-		bubblePositions[1][i] = bubblePositions[1][i] + 1*dt;
+	for (let i = 0; i < 8; i++) {
+		bubblePositions[1][i] = bubblePositions[1][i] + 0.75*dt;
 		drawBubble(bubblePositions[0][i], bubblePositions[1][i]);
 	}
     gPop();
