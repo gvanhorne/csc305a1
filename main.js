@@ -65,6 +65,10 @@ var fishPosition = [0,-1.25,0];
 
 var diverPosition = [5, 2, 0];
 
+var mouthPosition = [0, 0, 0];
+var lastBubbleTime = 0;
+var bubbleInterval = 3000;
+
 // Setting the colour which is needed during illumination of a surface
 function setColor(c)
 {
@@ -389,6 +393,17 @@ function drawFish(posX, posY, posZ, rotationSpeed) {
     gPop();
 }
 
+function extractPositionFromModelMatrix(m) {
+    // Extract the translation values (last column of the matrix)
+    const translation = [
+        m[0][3], // X
+        m[1][3], // Y
+        m[2][3]  // Z
+    ];
+
+    return translation;
+}
+
 function drawDiver() {
 	setColor(vec4(1, 1, 0, 1));
 	gPush();
@@ -406,7 +421,8 @@ function drawDiver() {
 	(function drawDiverHead() {
 		gPush();
 		gTranslate(0, 2.20, 0);
-		gScale(0.65, 0.65, 1)
+		gScale(0.65, 0.65, 1);
+		mouthPosition = extractPositionFromModelMatrix(modelMatrix);
 		drawSphere();
 		gPop();
 	})();
@@ -416,6 +432,7 @@ function drawDiver() {
 	 * @param {boolean} isLeft - If true, draw the left leg; otherwise, draw the right leg.
 	 */
 	function drawDiverLeg(isLeft) {
+		setColor(vec4(1, 1, 0, 1));
 		const legOffset = isLeft ? -0.4 : 0.6;
 		const legRotation = isLeft ? 15 * Math.cos(0.0015 * TIME) : 15 * Math.sin(0.0015 * TIME + 11);
 
@@ -459,6 +476,15 @@ function drawDiver() {
 	gPop();
 }
 
+function drawBubbles() {
+	gPush();
+	setColor(vec4(1, 1, 1, 1));
+	gTranslate(mouthPosition[0], mouthPosition[1], mouthPosition[2]);
+	gTranslate(0, 0, 1);
+	gScale(0.12, 0.12, 0.12);
+	drawSphere();
+}
+
 function render(timestamp) {
 	TIME = timestamp;
     gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -500,43 +526,7 @@ function render(timestamp) {
 	drawSeaweeds();
 	drawFish(fishPosition[0], fishPosition[1], fishPosition[2], 30);
 	drawDiver();
-
-	// // Cylinder example
-	// gPush();
-	// 	gTranslate(cylinderPosition[0],cylinderPosition[1],cylinderPosition[2]);
-	// 	gPush();
-	// 	{
-	// 		setColor(vec4(0.0,0.0,1.0,1.0));
-	// 		cylinderRotation[1] = cylinderRotation[1] + 60*dt;
-	// 		gRotate(cylinderRotation[1],0,1,0);
-	// 		drawCylinder();
-	// 	}
-	// 	gPop();
-	// gPop();
-
-	// Cone example
-	// gPush();
-	// 	gTranslate(conePosition[0],conePosition[1],conePosition[2]);
-	// 	gPush();
-	// 	{
-	// 		setColor(vec4(1, 0.5, 0, 1));
-	// 		coneRotation[1] = coneRotation[1] + 90*dt;
-	// 		gRotate(coneRotation[1],0,1,0);
-	// 		gScale(0.75, 0.75, 2.5);
-	// 		drawCone();
-	// 		gPop();
-	// 	}
-	// 	gPush();
-	// 	{
-	// 		gRotate(coneRotation[1] + 180, 0, 1, 0); // Rotate by 180 degrees
-	// 		gTranslate(0, 0, 1.62)
-	// 		setColor(vec4(1, 0.5, 0, 1));
-	// 		// gRotate(coneRotation[1],0,1,0);
-	// 		gScale(0.75, 0.75, 0.75);
-	// 		drawCone();
-	// 		gPop();
-	// 	}
-	// gPop();
+	drawBubbles();
 
     if( animFlag )
         window.requestAnimFrame(render);
