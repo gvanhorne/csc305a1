@@ -67,7 +67,7 @@ var diverPosition = [5, 2, 0];
 
 var mouthPosition = [0, 0, 0];
 var lastBubbleTime = 0;
-var bubbleInterval = 4250;
+var bubbleInterval = 4250 + (Math.random() * 1000) - 500;
 var bubbleCount = 0;
 var bubblePositions = [
 	[
@@ -527,7 +527,7 @@ function drawBubbles() {
 		bubblePositions[1][i] = bubblePositions[1][i] + 0.75*dt;
 		drawBubble(bubblePositions[0][i], bubblePositions[1][i]);
 	}
-    gPop();
+    gPop(); // DO NOT pop the bubble 😉💭
 }
 
 function render(timestamp) {
