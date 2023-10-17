@@ -60,8 +60,8 @@ var groundPosition = [0,-5,0];
 var cylinderRotation = [0,0,0];
 var cylinderPosition = [1.1,0,0];
 
-var fishRotation = [0,0,0];
-var fishPosition = [0,-1.25,0];
+var fishRotation = [0,270,0];
+var fishPosition = [0,0,0.5];
 
 var diverPosition = [5, 2, 0];
 
@@ -317,32 +317,31 @@ function drawSeaweedFrond(posX, posY, posZ) {
  * One frond for the left, center, and right of the large rock in scene.
  */
 function drawSeaweeds() {
-	drawSeaweedFrond(largeRockPosition[0] + 0.65, largeRockPosition[1] + .5, largeRockPosition[2] - 1)
-	drawSeaweedFrond(largeRockPosition[0], largeRockPosition[1] + 1, largeRockPosition[2] - 1)
-	drawSeaweedFrond(largeRockPosition[0] - 0.65, largeRockPosition[1] + 0.5, spherePosition[2] - 1)
+	drawSeaweedFrond(largeRockPosition[0] + 0.65, largeRockPosition[1] + .5, largeRockPosition[2])
+	drawSeaweedFrond(largeRockPosition[0], largeRockPosition[1] + 1, largeRockPosition[2])
+	drawSeaweedFrond(largeRockPosition[0] - 0.65, largeRockPosition[1] + 0.5, spherePosition[2])
 }
 
 /**
  * Draw a pair of cones with specified parameters.
  *
- * @param {number} posX - The x-coordinate of the cone's position.
- * @param {number} posY - The y-coordinate of the cone's position.
- * @param {number} posZ - The z-coordinate of the cone's position.
  * @param {number} rotationSpeed - The rotation speed for the first cone (degrees per second).
  */
-function drawFish(posX, posY, posZ, rotationSpeed) {
-    gPush();
+function drawFish(rotationSpeed) {
+	gPush();
+	gTranslate(fishPosition[0], fishPosition[1] - 2, fishPosition[2]);
 	gScale(0.75, 0.75, 0.75);
+	gRotate(fishRotation[1], 0, 1, 0);
 	gPush();
 	(function drawFishBody() {
-		gTranslate(fishPosition[0], fishPosition[1], posZ);
 		gPush();
 		{
 			// Draw fish body
-			setColor(vec4(1, 0.5, 0, 1));
-			fishPosition[1] = fishPosition[1] + 0.01*Math.cos(0.001*TIME); // Update y position
+			setColor(vec4(1, 0, 0, 1));
+			fishPosition[0] = 2*Math.cos((fishRotation[1] * (Math.PI / 180)));
+			fishPosition[1] = 1*Math.cos((fishRotation[1] * (Math.PI / 180)));// Update y position
+			fishPosition[2] = 6*Math.cos((fishRotation[1] * (Math.PI / 180)) + 1.75);
 			fishRotation[1] = fishRotation[1] + rotationSpeed*dt; // Update rotation
-			gRotate(fishRotation[1], 0, 1, 0);
 			gScale(0.75, 0.75, 2.5);
 			drawCone();
 		}
@@ -350,9 +349,9 @@ function drawFish(posX, posY, posZ, rotationSpeed) {
 	})();
 	(function drawFishHead() {
 		gPush(); // Eyes/tail will be relative to the head from this point on
-		gRotate(fishRotation[1] + 180, 0, 1, 0); // Rotate by 180 degrees
+		gRotate(180, 0, 1, 0); // Rotate by 180 degrees
         gTranslate(0, 0, 1.62);
-        setColor(vec4(1, 0.5, 0, 1));
+        setColor(vec4(0.5, 0.5, 0.5, 1));
         gScale(0.75, 0.75, 0.75);
         drawCone();
 	})();
@@ -380,12 +379,12 @@ function drawFish(posX, posY, posZ, rotationSpeed) {
 	})();
 	(function drawFishTail() {
 		// dorsal fin
+		setColor(vec4(1, 0, 0, 1));
 		gPush();
 		{
 			gTranslate(0, 0.75, -3.85);
 			gRotate(180, 0, 0.5, 0.25);
 			gRotate(25*Math.sin(0.010*TIME), 0, 1, 1);
-			setColor(vec4(1, 0.5, 0, 1));
 			gScale(0.2, 0.4, 2);
 			drawCone();
 		}
@@ -396,13 +395,13 @@ function drawFish(posX, posY, posZ, rotationSpeed) {
 			gTranslate(0, -0.5, -3.75);
 			gRotate(180, 0, 1, -0.5);
 			gRotate(25*Math.sin(0.010*TIME), 0, 1, 1);
-			setColor(vec4(1, 0.5, 0, 1));
 			gScale(0.2, 0.4, 1.3);
 			drawCone();
 		}
 		gPop();
 		gPop();
 	})();
+	gPop();
 	gPop();
 }
 
@@ -418,8 +417,9 @@ function extractPositionFromModelMatrix(m) {
 }
 
 function drawDiver() {
-	setColor(vec4(1, 1, 0, 1));
+	setColor(vec4(0.5, 0, 0.5, 1));
 	gPush();
+	gScale(0.75, 0.75, 0.75);
 	gTranslate(diverPosition[0], diverPosition[1], diverPosition[2]);
 	diverPosition[0] = diverPosition[0] + 0.01*Math.cos(0.001*TIME);
 	diverPosition[1] = diverPosition[1] + 0.01*Math.cos(0.001*TIME);
@@ -427,16 +427,20 @@ function drawDiver() {
 	gPush();
 	(function drawDiverBody() {
 		gPush();
-		gScale(1, 1.55, 1);
-		drawCube();
+		{
+			gScale(1, 1.55, 1);
+			drawCube();
+		}
 		gPop();
 	})();
 	(function drawDiverHead() {
 		gPush();
-		gTranslate(0, 2.20, 0);
-		gScale(0.65, 0.65, 1);
-		mouthPosition = extractPositionFromModelMatrix(modelMatrix);
-		drawSphere();
+		{
+			gTranslate(0, 2.20, 0);
+			gScale(0.65, 0.65, 1);
+			mouthPosition = extractPositionFromModelMatrix(modelMatrix);
+			drawSphere();
+		}
 		gPop();
 	})();
 	/**
@@ -445,41 +449,45 @@ function drawDiver() {
 	 * @param {boolean} isLeft - If true, draw the left leg; otherwise, draw the right leg.
 	 */
 	function drawDiverLeg(isLeft) {
-		setColor(vec4(1, 1, 0, 1));
 		const legOffset = isLeft ? -0.4 : 0.6;
 		const legRotation = isLeft ? 15 * Math.cos(0.0015 * TIME) : 15 * Math.sin(0.0015 * TIME + 11);
 
-		gTranslate(legOffset, -2.35, 0);
-		gRotate(legRotation, 0.5, 0, 0.0);
-		gRotate(-20, 0, 1, 0);
-		gRotate(35, 1, 0, 0);
 		gPush();
+		{
+			// Upper section of leg
+			gTranslate(legOffset, -2.35, 0);
+			gRotate(legRotation, 0.5, 0, 0.0);
+			gRotate(-20, 0, 1, 0);
+			gRotate(35, 1, 0, 0);
 
-		// Upper section of leg
-		gPush();
-		gScale(0.25, 1, 0.25);
-		drawCube();
+			gPush();
+			gScale(0.25, 1, 0.25);
+			drawCube();
+		}
 		gPop();
 
 		gPush();
-		gRotate(legRotation, 0.5, 0, 0.0);
-		gTranslate(0, -2, -0.35);
-		gRotate(20, 1, 0, -0.25);
+		{
+			// Lower section of leg
+			gRotate(legRotation, 0.5, 0, 0.0);
+			gTranslate(0, -2, -0.35);
+			gRotate(20, 1, 0, -0.25);
 
-		// Lower section of leg
-		gPush();
-		gScale(0.25, 1, 0.25);
-		drawCube();
+			gPush();
+			gScale(0.25, 1, 0.25);
+			drawCube();
+		}
 		gPop();
 
-		gTranslate(0, -1, 0.25);
-		gScale(0.25, 0.1, 0.5);
 		gPush();
+		{
+			gTranslate(0, -1, 0.25);
+			gScale(0.25, 0.1, 0.5);
 
-		// Foot
-		drawCube();
+			// Foot
+			drawCube();
+		}
 
-		gPop();
 		gPop();
 		gPop();
 		gPop();
@@ -487,12 +495,14 @@ function drawDiver() {
 	drawDiverLeg(true);
 	drawDiverLeg(false);
 	gPop();
+	gPop();
 }
 
 function drawBubbles() {
     gPush();
     setColor(vec4(1, 1, 1, 1));
     gTranslate(0, 0, 1);
+	gPush();
 
     function drawBubble(posX, posY) {
 				if (posX !== 0) {
@@ -503,6 +513,7 @@ function drawBubbles() {
 					gPop();
 				}
     }
+
 	if (TIME - lastBubbleTime >= bubbleInterval) {
 		bubbleCount = 0;
 		lastBubbleTime = TIME;
@@ -558,7 +569,7 @@ function render(timestamp) {
 	drawRock(smallRockPosition[0], smallRockPosition[1], smallRockPosition[2], 0.4);
 	drawGround(6);
 	drawSeaweeds();
-	drawFish(fishPosition[0], fishPosition[1], fishPosition[2], 30);
+	drawFish(25);
 	drawDiver();
 	drawBubbles();
 
