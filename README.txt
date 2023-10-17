@@ -1,6 +1,9 @@
 # CSC 305 Assignment 1
+## Gregory Van Horne
+## V00831402
+## 2023-10-16
 
-This document outlines the successful implementation of the required features and components in the animation project.
+This document outlines the implementation details of the required features for the first assignment.
 
 ## Project Requirements and Implementation
 
@@ -31,3 +34,9 @@ This document outlines the successful implementation of the required features an
 13. **Scene Dimensions and Visual Similarity (4 Marks)**: The scene fits within the window and is visually similar to the provided samples.
 
 14. **Programming Style (2 Marks)**: The code is well-documented with comments, and functions are appropriately organized for clarity and maintainability.
+
+15. **Canvas Size (-2 Marks if not)**: The scene is rendered on a 512x512 canvas.
+
+16. **File format (-2 Marks if not)**: This zip file contains all necessary files and is named according to the requested <firstname-lastname>.zip format.
+
+17. **README (-4 Marks if not)**: This README fulfills the readme.txt file requirement for the assignment.
