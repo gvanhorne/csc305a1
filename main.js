@@ -349,7 +349,7 @@ function drawFish(posX, posY, posZ, rotationSpeed) {
 		gPop();
 	})();
 	(function drawFishHead() {
-		gPush();
+		gPush(); // Eyes/tail will be relative to the head from this point on
 		gRotate(fishRotation[1] + 180, 0, 1, 0); // Rotate by 180 degrees
         gTranslate(0, 0, 1.62);
         setColor(vec4(1, 0.5, 0, 1));
@@ -360,46 +360,50 @@ function drawFish(posX, posY, posZ, rotationSpeed) {
 		function drawEye(x, y, z) {
 			// Draw whites of the eye
 			gPush();
-			setColor(vec4(1, 1, 1, 1));
-			gTranslate(x, y, z);
-			gScale(0.25, 0.25, 0.25);
-			drawSphere();
-			// Draw small black pupil
-			setColor(vec4(0, 0, 0, 1));
-			gTranslate(0, 0, 0.75);
-			gScale(0.5, 0.5, 0.5);
-			drawSphere();
+			{
+				setColor(vec4(1, 1, 1, 1));
+				gTranslate(x, y, z);
+				gScale(0.25, 0.25, 0.25);
+				drawSphere();
+				// Draw small black pupil
+				setColor(vec4(0, 0, 0, 1));
+				gTranslate(0, 0, 0.75);
+				gScale(0.5, 0.5, 0.5);
+				drawSphere();
+			}
 			gPop();
 		}
-		gPush();
 		// Left eye
 		drawEye(0.5, 0.5, -0.15);
 		// Right eye
 		drawEye(-0.5, 0.5, -0.15);
-		gPop();
 	})();
 	(function drawFishTail() {
 		// dorsal fin
 		gPush();
-		gTranslate(0, 0.75, -3.85);
-		gRotate(180, 0, 0.5, 0.25);
-		gRotate(25*Math.sin(0.010*TIME), 0, 1, 1);
-		setColor(vec4(1, 0.5, 0, 1));
-		gScale(0.2, 0.4, 2);
-		drawCone();
+		{
+			gTranslate(0, 0.75, -3.85);
+			gRotate(180, 0, 0.5, 0.25);
+			gRotate(25*Math.sin(0.010*TIME), 0, 1, 1);
+			setColor(vec4(1, 0.5, 0, 1));
+			gScale(0.2, 0.4, 2);
+			drawCone();
+		}
 		gPop();
 		// ventral fin
 		gPush();
-		gTranslate(0, -0.5, -3.75);
-		gRotate(180, 0, 1, -0.5);
-		gRotate(25*Math.sin(0.010*TIME), 0, 1, 1);
-		setColor(vec4(1, 0.5, 0, 1));
-		gScale(0.2, 0.4, 1.3);
-		drawCone();
+		{
+			gTranslate(0, -0.5, -3.75);
+			gRotate(180, 0, 1, -0.5);
+			gRotate(25*Math.sin(0.010*TIME), 0, 1, 1);
+			setColor(vec4(1, 0.5, 0, 1));
+			gScale(0.2, 0.4, 1.3);
+			drawCone();
+		}
+		gPop();
 		gPop();
 	})();
 	gPop();
-    gPop();
 }
 
 function extractPositionFromModelMatrix(m) {
